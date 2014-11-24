@@ -1,0 +1,24 @@
+* What is ac-skk ?
+ =ac-skk= provides  [[https://github.com/auto-complete/auto-complete][auto-complete]] source for [[http://openlab.ring.gr.jp/skk/ddskk.html][DDSKK]] .
+ =helm-bind-key=  making customizes key bindings interactively searchable with helm.
+
+* Requirements
+- [[https://github.com/auto-complete/auto-complete][auto-complete]] 
+- [[http://openlab.ring.gr.jp/skk/ddskk.html][DDSKK]] 
+
+
+* Screenshot
+ [[./image/screenshot.png]]
+
+* Usage
+** =ac-skk-enable=
+   Activate ac-skk source.
+** =ac-skk-disable=
+
+   Deactivate ac-skk source.
+** =ac-skk-toggle=
+   Toggle =ac-skk-enable= and =ac-skk-disable= .
+
+
+
+
