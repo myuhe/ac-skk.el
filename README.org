@@ -1,11 +1,9 @@
 * What is ac-skk ?
  =ac-skk= provides  [[https://github.com/auto-complete/auto-complete][auto-complete]] source for [[http://openlab.ring.gr.jp/skk/ddskk.html][DDSKK]] .
- =helm-bind-key=  making customizes key bindings interactively searchable with helm.
-
+ This project is inspired by [[https://github.com/igjit/ac-mozc][igjit/ac-mozc]]
 * Requirements
 - [[https://github.com/auto-complete/auto-complete][auto-complete]] 
 - [[http://openlab.ring.gr.jp/skk/ddskk.html][DDSKK]] 
-
 
 * Screenshot
  [[./image/screenshot.png]]
