@@ -48,6 +48,7 @@
 ;;; Code:
 
 (require 'cl-lib)
+(require 'tinysegmenter)
 (require 'auto-complete)
 (require 'skk)
 (require 'context-skk)
