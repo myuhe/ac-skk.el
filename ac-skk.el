@@ -47,6 +47,12 @@
 
 ;;; Code:
 
+(require 'cl-lib)
+(require 'auto-complete)
+(require 'skk)
+(require 'context-skk)
+(require 'skk-comp)
+
 (defvar ac-source-skk
   '((prefix . ac-skk-prefix)
     (candidates . ac-skk-candidates)
@@ -64,34 +70,37 @@
 
 (defun ac-skk-make-cand-list (midasi prog-list)
   (let* ((henkan-list (skk-search-progs midasi prog-list 'remove-note))
-         (candidates (loop for cand in henkan-list
+         (candidates (cl-loop for cand in henkan-list
                            for i from 0
                            collect (ac-skk-make-cand cand 'ac-skk-kakutei midasi i)))
          (forward-cand (ac-skk-make-cand midasi 'ac-skk-henkan-forward midasi (length candidates))))
     candidates))
 
+(defvar ac-skk-selected-candidate nil)
+(defvar ac-skk-ac-trigger-commands-orig nil)
+
 (defun ac-skk-candidates ()
   (when (eq skk-henkan-mode 'on)
     (let ((henkan-prog-list (append
-                             (subseq skk-search-prog-list
-                                     0 (position '(skk-okuri-search) skk-search-prog-list :test #'equal))
+                             (cl-subseq skk-search-prog-list
+                                     0 (cl-position '(skk-okuri-search) skk-search-prog-list :test #'equal))
                              (when skk-auto-okuri-process
                                (list '(skk-okuri-search-1)))))
           (midasi-prog-list '((skk-comp-from-jisyo skk-jisyo))))
-      (loop for midasi in (cons ac-prefix (skk-comp-get-all-candidates ac-prefix nil midasi-prog-list))
-            nconc (ac-skk-make-cand-list midasi henkan-prog-list)))))
+      (cl-loop for midasi in (cons ac-prefix (skk-comp-get-all-candidates ac-prefix nil midasi-prog-list))
+               nconc (ac-skk-make-cand-list midasi henkan-prog-list)))))
 ;; 順番が(Recent headに)変わらない時があるのはskk-studyの影響
 
 (defun ac-skk-kakutei ()
   (when skk-katakana
     (error "No Support skk-katakana mode."))
   (delete-region skk-henkan-start-point (point))
-  (insert (get-text-property 0 'henkan-key candidate)) ;only support execute in ac-complete function
-  (ac-skk-start-henkan (1+ (get-text-property 0 'skk-count candidate)))
+  (insert (get-text-property 0 'henkan-key ac-skk-selected-candidate)) ;only support execute in ac-complete function
+  (ac-skk-start-henkan (1+ (get-text-property 0 'skk-count ac-skk-selected-candidate)))
   (skk-kakutei))
 
 (defun ac-skk-henkan-forward ()
-  (ac-skk-start-henkan (get-text-property 0 'skk-count candidate))
+  (ac-skk-start-henkan (get-text-property 0 'skk-count (buffer-substring ac-point (point))))
   (skk-start-henkan 1))
 
 (defun ac-skk-start-henkan (count)
@@ -120,7 +129,7 @@
              (if (null (cdr lst))
                  (length (car lst))
                (if (= (length (cadr lst)) 1)
-                   (loop for c in lst sum (length c))
+                   (cl-loop for c in lst sum (length c))
                  (length (cadr lst))))))))))
 
 (defun ac-skk-hiracomp-candidates ()
@@ -130,7 +139,7 @@
                      (skk-search-katakana))))
     (append
      (skk-search-progs ac-prefix prog-list 'remove-note)
-     (loop for i from 0 below (length ac-prefix)
+     (cl-loop for i from 0 below (length ac-prefix)
            collect (propertize (concat (substring ac-prefix 0 i) "▽" (substring ac-prefix i))
                                'action 'ac-skk-hiracomp-mes)))))
 
@@ -139,11 +148,10 @@
     (save-match-data
       (when (looking-back "▽\\(\\cH+\\)" nil t)
         (setq midasi (match-string 1))
-        (delete-backward-char (length (match-string 0)))))
+        (delete-char (- (length (match-string 0))))))
     (skk-set-henkan-point-subr)
     (insert midasi)
     (ac-start :force-init t)))          ;これでいいのか？
-
 
 ;;;; Enable/Disable mode functions
 (defvar ac-skk-enable nil)
@@ -204,19 +212,9 @@
             nil
           ad-return-value)))
 
-;; On Debug
-(when (memq this-command '(expectations-eval-defun eval-defun))
-  ;; (remove-hook 'skk-mode-hook 'ac-skk-setup)
-  ;; (setq ac-use-comphist nil)
-  (progn (setq skk-search-end-function (delq 'skk-study-search skk-search-end-function))
-         (setq skk-update-end-function (delq 'skk-study-update skk-update-end-function)))
-  (message "AC-SKK DEBUG ON"))
+(defadvice ac-expand-string (after ad-ac-expand-string activate)
+       (setq ac-skk-selected-candidate ac-selected-candidate))
 
-(when (memq this-command '(expectations-eval-defun eval-defun))
-  (progn
-    ;; (setq ac-use-comphist t)
-    (add-to-list 'skk-search-end-function 'skk-study-search)
-    (add-to-list 'skk-update-end-function 'skk-study-update)
-    (message "AC-SKK DEBUG OFF")))
+(provide 'ac-skk)
 
 ;;; ac-skk.el ends here
