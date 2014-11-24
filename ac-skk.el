@@ -1,3 +1,52 @@
+;;; ac-skk.el --- auto-complete-mode source for DDSKK a.k.a Japanese input method
+
+;; Filename: ac-skk.el
+;; Description: auto-complete-mode source for Japanese
+;; Author: lugecy <https://twitter.com/lugecy>
+;; Maintainer: myuhe
+;; Copyright (C)  2014, lugecy,myuhe all rights reserved.
+;; Created: 2014-11-24
+;; Version: 0.1
+;; Keywords: convenience, auto-complete
+;; URL: https://github.com/myuhe/ac-skk.el
+;; Package-Requires: ((auto-complete "1.3.1"))
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation; either version 3, or (at your option)
+;; any later version.
+
+;; This file is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with GNU Emacs; see the file COPYING. If not, write to
+;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+;; Boston, MA 0:110-1301, USA.
+
+;;; Commentary:
+
+;; It is necessary to auto-complete.el Configurations.
+;; heavily borrowed from dabbrev.el and skk-kakutei-extra.el.
+;; Original Author is lugecy.  Thanks!!
+;; <https://github.com/lugecy/dot-emacs/blob/master/local-elisp/ac-skk.el>
+
+;; Installation:
+;; ============================================= 
+
+;; Put the ac-skk.el to your
+;; load-path.
+;; Add to init file :
+;; (require 'ac-ja.el)
+
+;;
+;;; Changelog:
+;;
+
+;;; Code:
+
 (defvar ac-source-skk
   '((prefix . ac-skk-prefix)
     (candidates . ac-skk-candidates)
@@ -169,3 +218,5 @@
     (add-to-list 'skk-search-end-function 'skk-study-search)
     (add-to-list 'skk-update-end-function 'skk-study-update)
     (message "AC-SKK DEBUG OFF")))
+
+;;; ac-skk.el ends here
