@@ -167,7 +167,7 @@
 ;;;; Enable/Disable mode functions
 (defvar ac-skk-enable nil)
 (defvar ac-skk-ac-sources-orig nil)
-(defvar ac-skk-save-variable '(ac-trigger-commands ac-use-comphist skk-dcomp-activate skk-dcomp-multiple-activate))
+(defvar ac-skk-save-variable '(ac-trigger-commands skk-dcomp-activate skk-dcomp-multiple-activate))
 
 ;;;###autoload
 (defun ac-skk-enable ()
