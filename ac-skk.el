@@ -159,17 +159,24 @@
 (defvar ac-skk-special-sources '(ac-source-skk))
 (defvar ac-skk-save-variable '(ac-trigger-commands ac-use-comphist skk-dcomp-activate skk-dcomp-multiple-activate))
 
+;;;###autoload
 (defun ac-skk-enable ()
   (interactive)
-  (setq ac-skk-enable t))
+  (setq ac-skk-enable t)
+  (message "enabled ac-skk."))
 
+;;;###autoload
 (defun ac-skk-disable ()
   (interactive)
-  (setq ac-skk-enable nil))
+  (setq ac-skk-enable nil)
+  (message "disabled ac-skk."))
 
+;;;###autoload
 (defun ac-skk-toggle ()
   (interactive)
-  (setq ac-skk-enable (not ac-skk-enable)))
+  (if (not ac-skk-enable)
+      (ac-skk-enable)
+    (ac-skk-disable)))
 
 (defun ac-skk-setup ()
   (when ac-skk-enable
