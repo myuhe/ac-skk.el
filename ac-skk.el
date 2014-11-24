@@ -54,6 +54,16 @@
 (require 'context-skk)
 (require 'skk-comp)
 
+
+;; Customization
+(defgroup ac-skk nil "Auto complete source for DDSKK"
+  :group 'auto-complete)
+
+(defcustom ac-skk-special-sources '(ac-source-skk ac-source-skk-hiracomp)
+  "When non-nil, show completion result flags during fuzzy completion."
+  :type '(repeat symbol)
+  :group 'ac-skk)
+
 (defvar ac-source-skk
   '((prefix . ac-skk-prefix)
     (candidates . ac-skk-candidates)
@@ -157,7 +167,6 @@
 ;;;; Enable/Disable mode functions
 (defvar ac-skk-enable nil)
 (defvar ac-skk-ac-sources-orig nil)
-(defvar ac-skk-special-sources '(ac-source-skk))
 (defvar ac-skk-save-variable '(ac-trigger-commands ac-use-comphist skk-dcomp-activate skk-dcomp-multiple-activate))
 
 ;;;###autoload
