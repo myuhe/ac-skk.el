@@ -131,10 +131,10 @@
   (when (and skk-mode
              skk-j-mode
              (not skk-henkan-mode)
-             (fboundp 'ts:segment))
+             (fboundp 'tseg-segment))
     (save-match-data
       (when (looking-back "\\(?:\\cH\\|\\cK\\|\\cC\\)\\{1,10\\}" (max (- (point) 10) 0) t)
-        (let* ((segs (ts:segment (substring-no-properties (match-string 0) 0)))
+        (let* ((segs (tseg-segment (substring-no-properties (match-string 0) 0)))
                (lst (last segs 2)))
           (- (point)
              (if (null (cdr lst))
