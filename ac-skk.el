@@ -9,7 +9,7 @@
 ;; Version: 0.1
 ;; Keywords: convenience, auto-complete
 ;; URL: https://github.com/myuhe/ac-skk.el
-;; Package-Requires: ((auto-complete "1.3.1"))
+;; Package-Requires: ((auto-complete "1.3.1")(ddskk "15.2"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
