@@ -4,6 +4,7 @@
 * Requirements
 - [[https://github.com/auto-complete/auto-complete][auto-complete]] 
 - [[http://openlab.ring.gr.jp/skk/ddskk.html][DDSKK]] 
+- tinysegmenter
 
 * Screenshot
  [[./image/screenshot.png]]
