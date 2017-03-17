@@ -39,7 +39,7 @@
 ;; Put the ac-skk.el to your
 ;; load-path.
 ;; Add to init file :
-;; (require 'ac-ja.el)
+;; (require 'ac-skk)
 
 ;;
 ;;; Changelog:
